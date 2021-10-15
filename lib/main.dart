@@ -44,12 +44,20 @@ final euroController = TextEditingController();
   double? euro;
 
   void _realChanged(String text){
+    double real = double.tryParse(text) ?? 0;
+    dolarController.text = (real/dolar!).toStringAsFixed(2);
+    euroController.text = (real/euro!).toStringAsFixed(2);
 
   }
   void _dolarChanged(String text){
-    
+    double dolar = double.tryParse(text) ?? 0;
+    realController.text = (dolar * this.dolar!).toStringAsFixed(2);
+    euroController.text = (dolar * this.dolar! / euro!).toStringAsFixed(2);
   }
   void _euroChanged(String text){
+    double euro = double.tryParse(text) ?? 0;
+    realController.text = (euro * this.euro!).toStringAsFixed(2);
+    dolarController.text = (euro * this.euro! / dolar!).toStringAsFixed(2);
     
   }
 
