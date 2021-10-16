@@ -10,12 +10,9 @@ import 'currency_ptbr_input_format.dart';
 //import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:intl/intl.dart';
 
-
 const request = "https://api.hgbrasil.com/finance?format=json&key=2522a16f";
 
-
 void main() async {
-
   runApp(
     MaterialApp(
       home: Home(),
@@ -38,10 +35,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  final realController =  TextEditingController();
+  final realController = TextEditingController();
   final dolarController = TextEditingController();
-  final euroController =  TextEditingController();
+  final euroController = TextEditingController();
 
   double? dolar;
   double? euro;
@@ -52,20 +48,17 @@ class _HomeState extends State<Home> {
     euroController.text = "";
   }
 
-  double _convertMaskdouble(String text){
-    final textReplece = text.replaceAll(",","").replaceAll(".","");
+  double _convertMaskdouble(String text) {
+    final textReplece = text.replaceAll(",", "").replaceAll(".", "");
     final doubleconvet = double.parse(textReplece);
-    return  doubleconvet / 100;
+    return doubleconvet / 100;
   }
 
-  String _formatCurrency(double newValue){
-    
+  String _formatCurrency(double newValue) {
     final formatter = NumberFormat("#,##0.00", "pt_BR");
     String newText = formatter.format(newValue);
-return newText;
-
+    return newText;
   }
-
 
   void _realChanged(String text) {
     if (text.isEmpty) {
@@ -83,7 +76,7 @@ return newText;
       return;
     }
     double dolar = _convertMaskdouble(text);
-    realController.text = _formatCurrency( dolar * this.dolar!);
+    realController.text = _formatCurrency(dolar * this.dolar!);
     euroController.text = _formatCurrency(dolar * this.dolar! / euro!);
   }
 
@@ -91,7 +84,7 @@ return newText;
     if (text.isEmpty) {
       _clearAll();
       return;
-    }     
+    }
     double euro = _convertMaskdouble(text);
     realController.text = _formatCurrency(euro * this.euro!);
     dolarController.text = _formatCurrency(euro * this.euro! / dolar!);
@@ -129,9 +122,10 @@ return newText;
                       textAlign: TextAlign.center,
                     ));
                   } else {
-
-                    dolar = snapshot.data!["results"]["currencies"]["USD"]["buy"];
-                    euro = snapshot.data!["results"]["currencies"]["EUR"]["buy"];
+                    dolar =
+                        snapshot.data!["results"]["currencies"]["USD"]["buy"];
+                    euro =
+                        snapshot.data!["results"]["currencies"]["EUR"]["buy"];
 
                     return SingleChildScrollView(
                       padding: EdgeInsets.all(10.0),
@@ -157,12 +151,10 @@ return newText;
   }
 }
 
-
-
 Widget buildTextField(
     String label, String prefix, TextEditingController c, Function(String) f) {
   return TextFormField(
-      inputFormatters: [
+    inputFormatters: [
       FilteringTextInputFormatter.digitsOnly,
       CurrencyPtBrInputFormatter(maxDigits: 12),
     ],
@@ -170,7 +162,15 @@ Widget buildTextField(
     decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.amber.shade300),
-        border: OutlineInputBorder(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.amber),
+          borderRadius: BorderRadius.circular(50.00),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.amber),
+          borderRadius: BorderRadius.circular(50.00),
+        ),
+        //fillColor: Colors.amber,
         prefixText: prefix),
     style: TextStyle(color: Colors.amber.shade300, fontSize: 25.0),
     onChanged: f,
