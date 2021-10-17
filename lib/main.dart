@@ -15,7 +15,9 @@ const request = "https://api.hgbrasil.com/finance?format=json&key=2522a16f";
 void main() async {
   runApp(
     MaterialApp(
+      
       home: Home(),
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         hintColor: Colors.white,
         primaryColor: Colors.white,
@@ -23,6 +25,7 @@ void main() async {
     ),
   );
 }
+
 
 Future<Map> getData() async {
   http.Response response = await http.get(Uri.parse(request));
@@ -99,7 +102,8 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.amber.shade300,
           centerTitle: true,
         ),
-        body: FutureBuilder<Map>(
+        body:
+         FutureBuilder<Map>(
             future: getData(),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
@@ -132,8 +136,14 @@ class _HomeState extends State<Home> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          Icon(Icons.attach_money,
-                              size: 150.0, color: Colors.white),
+                          Padding(
+                            padding:
+                            EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 40.0),
+                            child: 
+                             Image.asset("images/ico.png", width: 100,height: 100,),
+                            ),
+
+                          //Divider(height: 50,),
                           buildTextField(
                               "Reais", "R\$", realController, _realChanged),
                           Divider(),
@@ -142,6 +152,16 @@ class _HomeState extends State<Home> {
                           Divider(),
                           buildTextField(
                               "Euros", "€", euroController, _euroChanged),
+                        Padding
+                        (padding: EdgeInsets.fromLTRB(10, 50, 10, 0),
+                        child: Text("1º O aplicativo pega a cotação do mercado em tempo real para fazer as conversão.\n 2º As conversão é feita com o valor de compra do dolar!\n 3º App desenvolvido por Jacksonzacarias",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize:  12.0),
+                        ),
+                        ),
+                        
+                        
+                        
                         ],
                       ),
                     );
